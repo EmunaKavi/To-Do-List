@@ -1,109 +1,317 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo-List</title>
+    <title>Responsive Todo List</title>
     <link rel="stylesheet" href="style.css" />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
+    <style>
+        /* Body with black background */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000; /* Black */
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: #d50000; /* Red */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 100%;
+            max-width: 800px; /* Increased max width */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        .subtitle {
+            font-size: 2em;
+            color: #ffd700; /* Gold */
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ffd700; /* Gold */
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #fff; /* White on focus */
+        }
+
+        /* Action buttons */
+        .js-actions-wrapper {
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap */
+            justify-content: center; /* Center buttons */
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #ffd700; /* Gold */
+            border: none;
+            padding: 10px 20px; /* Added horizontal padding */
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            color: #000; /* Black text */
+            margin: 5px; /* Margin for spacing */
+            flex: 1; /* Make buttons take equal space */
+            min-width: 140px; /* Increased minimum width for buttons */
+            width: calc(30% - 10px); /* Set width for buttons with spacing */
+        }
+
+        /* Universal hover effect for all buttons */
+        .button:hover {
+            background-color: #4caf50; /* Green */
+            color: #fff; /* White text */
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        .sort-buttons {
+            margin: 20px 0;
+            display: flex; /* Flex container for sort buttons */
+            justify-content: space-between; /* Space between buttons */
+            flex-wrap: wrap; /* Wrap if necessary */
+            width: 100%;
+        }
+
+        .sort-button {
+            margin: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            color: #000; /* Black text */
+            flex: 1; /* Make sort buttons take equal space */
+            min-width: 140px; /* Increased minimum width for sort buttons */
+            width: calc(30% - 10px); /* Set width for sort buttons with spacing */
+        }
+
+        .sort-button:hover {
+            background-color: #4caf50; /* Green */
+            color: #f90a0a; /* White text */
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        footer {
+            margin-top: 20px;
+            color: #ffd700; /* Gold */
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        .social-media a {
+            color: #ffd700; /* Gold */
+            font-size: 24px;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        .social-media a:hover {
+            color: #d50000; /* Red */
+        }
+
+        /* Task list styling */
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .task-item {
+            background-color: #d50000; /* Red */
+            color: #ffd700; /* Gold */
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .task-item:hover {
+            background-color: #f54242; /* Slightly darker red */
+            transform: scale(1.02); /* Slight zoom on hover */
+        }
+    </style>
+</head>
+<body>
     <div class="container">
-      <h1 class="subtitle">Todo-List</h1>
+        <h1 class="subtitle">Todo-List</h1>
 
-      <div class="js-add-grid" id="add-todo">
-        <input
-          type="text"
-          placeholder="Share Your Thoughts"
-          class="js-name-input"
-        />
+        <div class="js-add-grid" id="add-todo">
+            <input
+                type="text"
+                placeholder="Share Your Thoughts"
+                class="js-name-input"
+                id="taskInput"
+            />
 
-        <input type="date" class="js-date-input" min="" />
-        <input type="time" class="js-time-input" />
-        <select class="js-category-input">
-          <option value="">Select Category</option>
-          <option value="work">Work</option>
-          <option value="personal">Personal</option>
-          <option value="shopping">Shopping</option>
-          <option value="other">Other</option>
-        </select>
-        <select class="js-priority-input">
-          <option value="">Select Priority</option>
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
-        <div class="js-actions-wrapper">
-          <button class="js-add-button">
-            <i class="fa-solid fa-add"></i>
-          </button>
-          <button class="js-cancel-button" title="Cancel">
-            <i class="fa-solid fa-times"></i>
-          </button>
-        </div>
-        <div id="js-success-notification" style="display: none">
-          <p>Task completed 🎉</p>
-        </div>
-      </div>
+            <input type="date" class="js-date-input" id="dateInput" />
+            <input type="time" class="js-time-input" id="timeInput" />
+            <select class="js-category-input" id="categoryInput">
+                <option value="">Select Category</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="shopping">Shopping</option>
+                <option value="other">Other</option>
+            </select>
+            <select class="js-priority-input" id="priorityInput">
+                <option value="">Select Priority</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
 
-      <!-- Add this new div for sorting buttons -->
-      <div class="sort-buttons">
-        <div class="sort-filter-container">
-          <button class="sort-button" onclick="sortTodos('category')">
-            Sort by Category
-          </button>
-          <button class="sort-button" onclick="sortTodos('priority')">
-            Sort by Priority
-          </button>
-          <select class="js-filter-input" onchange="filterTodos()">
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-          </select>
+            <div class="js-actions-wrapper">
+                <button class="button js-submit-button" id="submitButton">
+                    <i class="fa-solid fa-check"></i> Submit Task
+                </button>
+                <button class="button js-cancel-button" title="Cancel">
+                    <i class="fa-solid fa-times"></i> Clear
+                </button>
+            </div>
+            <div id="js-success-notification" style="display: none">
+                <p>Task added successfully! 🎉</p>
+            </div>
         </div>
-      </div>
-      <div class="test">
-        <div class="js-add-html js-add-grid js-add-html-tasks"></div>
-      </div>
+
+        <ul class="task-list" id="taskList"></ul>
+
+        <div class="sort-buttons">
+            <div class="sort-filter-container">
+                <button class="button sort-button" onclick="sortTodos('time', 'asc')">
+                    Sort by Time (Asc)
+                </button>
+                <button class="button sort-button" onclick="sortTodos('time', 'desc')">
+                    Sort by Time (Desc)
+                </button>
+                <button class="button sort-button" onclick="sortTodos('category')">
+                    Sort by Category
+                </button>
+                <button class="button sort-button" onclick="sortTodos('priority')">
+                    Sort by Priority
+                </button>
+            </div>
+        </div>
+
+        <div class="test">
+            <div class="js-add-html js-add-grid js-add-html-tasks"></div>
+        </div>
     </div>
 
     <footer class="footer">
-      <p>&copy; 2024 Made with &#10084; by Ansh Grover. All rights reserved.</p>
-      <div class="social-media">
-        <a class="insta" href="https://www.instagram.com/" target="_blank"
-          ><i class="fa-brands fa-instagram"></i
-        ></a>
-        <a class="facebook" href="https://www.facebook.com/" target="_blank"
-          ><i class="fa-brands fa-facebook"></i
-        ></a>
-        <a class="x" href="https://x.com/i/flow/login" target="_blank"
-          ><i class="fa-brands fa-x-twitter"></i
-        ></a>
-        <a class="linkedin" href="https://www.linkedin.com/" target="_blank"
-          ><i class="fa-brands fa-linkedin-in"></i
-        ></a>
-        <a class="github" href="https://github.com/Groverio" target="_blank"
-          ><i class="fa-brands fa-github"></i
-        ></a>
-        <a class="youtube" href="https://www.youtube.com/" target="_blank"
-          ><i class="fa-brands fa-youtube"></i
-        ></a>
-      </div>
+        <p>&copy; 2024 Made with &#10084; by Ansh Grover. All rights reserved.</p>
+        <div class="social-media">
+            <a class="insta" href="https://www.instagram.com/" target="_blank"
+                ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a class="facebook" href="https://www.facebook.com/" target="_blank"
+                ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a class="x" href="https://x.com/i/flow/login" target="_blank"
+                ><i class="fa-brands fa-x-twitter"></i
+            ></a>
+            <a class="linkedin" href="https://www.linkedin.com/" target="_blank"
+                ><i class="fa-brands fa-linkedin"></i
+            ></a>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
-  </body>
+    <script>
+        const submitButton = document.getElementById("submitButton");
+        const taskInput = document.getElementById("taskInput");
+        const dateInput = document.getElementById("dateInput");
+        const timeInput = document.getElementById("timeInput");
+        const categoryInput = document.getElementById("categoryInput");
+        const priorityInput = document.getElementById("priorityInput");
+        const taskList = document.getElementById("taskList");
+        const successNotification = document.getElementById("js-success-notification");
+        const cancelButton = document.querySelector('.js-cancel-button');
+
+        submitButton.addEventListener("click", function () {
+            const task = taskInput.value;
+            const date = dateInput.value;
+            const time = timeInput.value;
+            const category = categoryInput.value;
+            const priority = priorityInput.value;
+
+            if (task && date && time && category && priority) {
+                const li = document.createElement("li");
+                li.className = "task-item";
+                li.textContent = `${task} - ${date} ${time} | ${category} | ${priority}`;
+                taskList.appendChild(li);
+
+                successNotification.style.display = "block";
+
+                // Clear the inputs
+                taskInput.value = "";
+                dateInput.value = "";
+                timeInput.value = "";
+                categoryInput.value = "";
+                priorityInput.value = "";
+            }
+        });
+
+        cancelButton.addEventListener("click", function () {
+            taskInput.value = "";
+            dateInput.value = "";
+            timeInput.value = "";
+            categoryInput.value = "";
+            priorityInput.value = "";
+        });
+
+        function sortTodos(criteria, order) {
+            const tasks = Array.from(taskList.children);
+            tasks.sort((a, b) => {
+                const aValue = criteria === 'category' ? a.textContent.split('|')[1].trim() : a.textContent.split('|')[0].trim();
+                const bValue = criteria === 'category' ? b.textContent.split('|')[1].trim() : b.textContent.split('|')[0].trim();
+                
+                if (criteria === 'time') {
+                    const aDate = new Date(`${aValue.split(' - ')[1]}T${aValue.split(' - ')[0]}`);
+                    const bDate = new Date(`${bValue.split(' - ')[1]}T${bValue.split(' - ')[0]}`);
+                    return order === 'asc' ? aDate - bDate : bDate - aDate;
+                } else if (criteria === 'priority') {
+                    const priorityOrder = { high: 1, medium: 2, low: 3 };
+                    return priorityOrder[aValue.split('|')[2].trim()] - priorityOrder[bValue.split('|')[2].trim()];
+                }
+                return aValue.localeCompare(bValue);
+            });
+            taskList.innerHTML = '';
+            tasks.forEach(task => taskList.appendChild(task));
+        }
+    </script>
+</body>
 </html>
